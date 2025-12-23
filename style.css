@@ -1,0 +1,785 @@
+@charset "UTF-8";
+
+/* =====================================================
+  Base / 基本設定
+===================================================== */
+:root {
+  --v-space: clamp(90px, 9vw, 120px);
+
+  /* Accent Color（和色） */
+  --accent-color: #7a3e47; /* 葡萄茶 */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #f1f0ec;
+  color: #2b2b2b;
+  font-family:
+    "Noto Serif JP",
+    "游明朝",
+    "Yu Mincho",
+    serif;
+}
+
+h1, h2, h3 {
+  letter-spacing: 0.08em;
+}
+
+h1, h2, h3, h4, h5, h6,
+p, figure {
+  margin: 0;
+  padding: 0;
+}
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+p {
+  line-height: 1.9;
+  letter-spacing: 0.02em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+a:hover {
+  color: var(--accent-color);
+  opacity: 0.8;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.site img {
+  width: 180px;   /* 好きなサイズ */
+  height: auto;
+}
+
+
+
+
+/* =========================
+   ABOUT（章感を出す）
+========================= */
+
+.about {
+  background-color: #f4f2ee; /* 和紙のような淡い生成り */
+  padding: clamp(80px, 10vw, 120px) 0;
+}
+
+.about .heading {
+  margin-bottom: 0.5em;
+}
+
+.about .heading-sub {
+  margin-bottom: 3em;
+  color: #666;
+}
+
+.about-text {
+  max-width: 680px;
+  margin: 0 auto;
+  line-height: 2;
+  color: #333;
+}
+
+.about-text p + p {
+  margin-top: 2em;
+}
+
+/* ABOUT 見出し：和風寄せ */
+.about .heading {
+  letter-spacing: 0.25em;     /* 字間を広めに */
+  font-weight: 400;
+}
+
+.about .heading-sub {
+  letter-spacing: 0.3em;
+  font-size: 12px;
+}
+
+.about .heading::after {
+  content: "";
+  display: block;
+  width: 1px;
+  height: 40px;
+  background-color: var(--accent-color);
+  margin: 16px auto 0;
+  opacity: 0.4;
+}
+
+/* ABOUT直後の最初のセクションだけ詰める */
+.about + .imgtext {
+  padding-top: calc(var(--v-space) * 0.6);
+}
+
+
+
+/* =====================================================
+  Layout / 共通レイアウト
+===================================================== */
+.w-container {
+  width: min(92%, 1166px);
+  margin: auto;
+  position: relative;
+}
+
+/* =====================================================
+  Header
+===================================================== */
+.header {
+  height: 112px;
+  background-color: #ffffff;
+}
+
+.heading-sub {
+  margin-top: 8px;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  color: #777;
+}
+
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+/* ナビボタン */
+.navbtn {
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #aaaaaa;
+  font-size: 30px;
+}
+
+.open .navbtn {
+  z-index: 110;
+  color: #ffffff;
+}
+
+.navbtn .fa-bars { display: revert; }
+.open .navbtn .fa-bars { display: none; }
+
+.navbtn .fa-times { display: none; }
+.open .navbtn .fa-times { display: revert; }
+
+@media (min-width: 768px) {
+  .navbtn { display: none; }
+}
+
+
+
+/* ナビ：モバイル */
+@media (max-width: 767px) {
+  .nav {
+    position: fixed;
+    inset: 0 -100% 0 100%;
+    z-index: 100;
+    background-color: rgba(246, 245, 242, 0.95); /* 栗色と相性◎ */
+    transition: transform 0.3s ease;
+  }
+
+  
+
+  .open .nav {
+    transform: translate(-100%, 0);
+  }
+
+  /* 縦書きメニュー本体 */
+  .nav ul {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+
+    gap: 56px; /* 縦方向の“間” */
+    color: rgba(140, 108, 82, 0.95);
+    letter-spacing: 0.25em;
+  }
+
+
+
+  /* 各メニュー項目（短冊化） */
+  .nav li a {
+    display: inline-block;
+    padding: 10px 6px;
+    line-height: 1.8;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .nav li a:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+@media (max-width: 767px) {
+  .nav ul::before {
+    content: "";
+    position: absolute;
+    top: 12%;
+    bottom: 12%;
+    left: 50%;
+    width: 1px;
+    background-color: rgba(140, 108, 82, 0.2);
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 767px) {
+
+  /* メニュー全体を横並びに */
+  .nav ul {
+    writing-mode: horizontal-tb;   /* ← ここが決定打 */
+    text-orientation: mixed;
+
+    flex-direction: column;        /* 縦に並ぶ＝一般的なハンバーガー */
+    gap: 40px;
+  }
+
+  /* リンク文字 */
+  .nav li a {
+    writing-mode: horizontal-tb;
+    text-orientation: mixed;
+    letter-spacing: 0.25em;        /* 今の美しさを維持 */
+    padding: 12px 18px;
+  border-bottom: 1px solid rgba(140,108,82,0.25);
+  }
+}
+
+
+/* ナビ：PC */
+@media (min-width: 768px) {
+  .nav ul {
+    display: flex;
+    gap: 40px;
+    color: #707070;
+    letter-spacing: 0.1em;
+  }
+
+  .nav a:hover {
+    color: var(--accent-color);
+  }
+}
+
+/* =====================================================
+  Hero
+===================================================== */
+.hero {
+  position: relative;
+  height: 100vh;
+  background-image: url("img/PHOTO01.jpg");
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+/* 背景ズーム */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: inherit;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.05);
+  transition: transform 1.6s ease;
+  z-index: 0;
+  will-change: transform;
+}
+
+/* グラデーション */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0,0,0,0.45),
+    rgba(0,0,0,0.05) 60%
+  );
+  z-index: 1;
+}
+
+.hero-container {
+  position: relative;
+  height: 100%;
+  z-index: 2;
+}
+
+/* ヒーロータイトル */
+.hero-title {
+  position: absolute;
+  top: 10%;
+  left: clamp(3%, 6vw, 8%);
+  writing-mode: vertical-rl;
+  letter-spacing: 0.25em;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.6;
+  max-height: 80vh;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.hero-sub {
+  font-size: 15px;
+  opacity: 0.6;
+}
+
+.hero-main {
+  font-size: 38px;
+}
+
+/* スクロール後 */
+.hero-title.is-fade {
+  opacity: 0.35;
+  transform: translateY(-8px);
+}
+
+.hero.is-scrolled::after {
+  transform: scale(1);
+}
+
+/* モバイル */
+@media (max-width: 768px) {
+  .hero-title {
+    top: 6%;
+    left: 4%;
+    letter-spacing: 0.12em;
+  }
+}
+
+.hero-main {
+  font-size: clamp(28px, 4vw, 38px);
+}
+
+/* =====================================================
+  Image + Text
+===================================================== */
+.imgtext {
+  padding: var(--v-space) 0;
+  background-color: #ffffff;
+}
+
+.imgtext + .imgtext {
+  padding-top: 0;
+}
+
+.imgtext-container {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(45px, 6vw, 80px);
+}
+
+.imgtext .img {
+  aspect-ratio: 4 / 3;   /* 他の写真に近い比率 */
+  overflow: hidden;
+}
+
+.imgtext .img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+@media (min-width: 768px) {
+  .imgtext-container {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .imgtext-container.reverse {
+    flex-direction: row-reverse;
+  }
+
+  .imgtext-container > .text { flex: 1; }
+  .imgtext-container > .img { flex: 2; }
+}
+
+/* 見出し装飾 */
+.heading-decoration::after {
+  content: "";
+  display: block;
+  width: 140px;
+  border-top: 1px solid var(--accent-color);
+  margin-top: 0.6em;
+  opacity: 0.6;
+}
+
+.imgtext-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.imgtext-link:hover {
+  opacity: 0.9;
+}
+
+/* =====================================================
+  Posts / 四季を縦の時間軸で見せる
+===================================================== */
+.posts {
+  padding: var(--v-space) 0;
+  background-color: #f3f1ed;
+}
+
+.posts-container {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px 25px;
+}
+
+/* 縦の時間軸ライン */
+.posts-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 12px;
+  width: 1px;
+  height: 100%;
+  background-color: rgba(122, 62, 71, 0.25);
+}
+
+@media (min-width: 768px) {
+  .posts-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* 各ポスト */
+.post {
+  position: relative;
+  padding-top: 60px;
+}
+
+.posts-link:hover .post img {
+  transform: scale(1.03);
+  transition: 0.4s;
+}
+
+
+/* 季節ごとの「間」＝時間の流れ */
+.post:nth-child(1) { margin-top: 0; }
+.post:nth-child(2) { margin-top: 40px; }
+.post:nth-child(3) { margin-top: 90px; }
+.post:nth-child(4) { margin-top: 150px; }
+
+/* 冬の静けさ */
+.post:nth-child(4) {
+  opacity: 0.9;
+}
+
+.post:nth-child(4) img {
+  filter: saturate(0.9) brightness(0.95);
+}
+
+/* 季節ラベル（縦） */
+.season-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  writing-mode: vertical-rl;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  color: var(--accent-color);
+  opacity: 0.75;
+  margin-bottom: 0.3em;}
+
+/* テキスト */
+.post p {
+  font-size: clamp(12px, 1.6vw, 14px);
+  color: #666;
+}
+
+.post img,
+.imgtext-container .img img {
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+
+
+.jp-tight {
+  letter-spacing: 0.02em;
+  margin-left: -0.05em; /* わずかに詰める */
+}
+
+.post a:hover .season-label {
+  opacity: 1;
+}
+
+
+
+/* =====================================================
+  Page Top
+===================================================== */
+#pagetop_inner {
+  background: var(--accent-color);
+}
+
+#pagetop_inner:hover {
+  opacity: 0.85;
+}
+
+/* =========================
+   Page Top（キャラ固定）
+========================= */
+.pagetop {
+  position: fixed;
+  right: 0;
+  bottom: 12%;
+
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+
+  padding: 10px 6px 10px 8px;
+
+  background-color: rgba(244, 242, 238, 0.92); /* 和紙 */
+  color: rgba(122, 62, 71, 0.85); /* 葡萄茶 */
+
+  font-size: 12px;
+  letter-spacing: 0.25em;
+
+  border-left: 1px solid rgba(122, 62, 71, 0.4);
+
+  box-shadow: -2px 0 8px rgba(0,0,0,0.04);
+
+  z-index: 90;
+
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.pagetop:hover {
+  transform: translateX(-3px);
+  opacity: 0.95;
+}
+
+/* ===== スマホ用 ナビ内ロゴ（SANSA直下） ===== */
+
+/* デフォルト：非表示（PC含む） */
+.nav-logo {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .nav ul {
+    padding-top: 60px; /* 上に余白 */
+  }
+
+  .nav-logo {
+    position: absolute;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: block;
+  }
+
+  .nav-logo img {
+    height: 5em;
+    width: auto;
+    opacity: 0.95;
+    margin: 0 auto;
+    display: block;
+  }
+}  /* ← これを必ず追加 */
+
+/* ===== 3枚写真セクション ===== */
+.photo-section {
+  margin-bottom: clamp(90px, 10vw, 140px);
+}
+
+.photo-grid {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.photo-grid img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.grid-text {
+  margin-top: 20px;
+  line-height: 1.8;
+  font-family: "Noto Serif JP", serif;
+}
+
+/* タブレット */
+@media (max-width: 900px) {
+  .photo-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* スマホ */
+@media (max-width: 600px) {
+  .photo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .photo-grid img {
+    height: 200px;
+  }
+}
+
+/* 長文テキスト整形 */
+.grid-text {
+  max-width: 720px;        /* PCで横に広がりすぎない */
+  margin: 24px auto 0;
+  font-family: "Noto Serif JP", serif;
+  line-height: 1.9;
+  font-size: 0.95rem;
+}
+
+.grid-text p {
+  margin-bottom: 1.2em;
+}
+
+/* スマホ */
+@media (max-width: 600px) {
+  .grid-text {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    padding: 0 10px;
+  }
+}
+
+.editorial {
+  margin-top: 120px;
+  padding-top: 40px;
+  border-top: 1px solid #ddd;
+}
+
+.editorial-note {
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: #777;
+  max-width: 640px;
+}
+
+/* =====================================================
+  Footer
+===================================================== */
+
+.footer-sns a:hover {
+  color: var(--accent-color);
+}
+
+.footer {
+  position: relative;
+  padding: 90px 0; /* 写真があるので少し余白アップ */
+  background-image: url("img/PHOTO03.jpg");
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  font-size: 13px;
+}
+
+/* 写真の上に暗幕をかける */
+.footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.footer-container {
+  position: relative;
+  z-index: 1;
+}
+
+.footer-site img {
+  filter: brightness(1.4) sepia(0.1);
+}
+
+/* =========================
+   About : 足跡
+========================= */
+
+.about-step {
+  margin-top: 64px;
+  text-align: center;
+}
+
+.about-step svg {
+  display: block;
+  margin: 0 auto;
+  opacity: 0.7;
+}
+
+.about-step svg + svg {
+  margin-top: 14px;
+  transform: translateX(4px);
+  opacity: 0.85;
+}
+
+/* =========================
+   ABOUT 次への導線
+========================= */
+
+.about-next {
+  text-align: center;
+  margin: 80px 0 120px;
+}
+
+.about-next a {
+  display: inline-block;
+  font-family: "Montserrat", serif;
+  font-size: 14px;
+  letter-spacing: 0.15em;
+  color: #7a3e47; /* アクセントカラー */
+  text-decoration: none;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(122, 62, 71, 0.4);
+  transition: all 0.3s ease;
+}
+
+.about-next a:hover {
+  color: #2b2b2b;
+  border-bottom-color: #2b2b2b;
+}
+
+/* 長文用テキスト設計 */
+.imgtext .text {
+  max-width: 38ch;
+}
+
+.imgtext .text p {
+  line-height: 2;
+  margin-bottom: 1.6em;
+}
+
+/* 英語タイトル */
+.food-en {
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  opacity: 0.6;
+  margin-bottom: 1.5em;
+}

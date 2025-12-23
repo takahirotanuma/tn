@@ -1,0 +1,115 @@
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 300" width="700" height="300">
+
+  <defs>
+    <style>
+      :root {
+        --main: rgba(140,108,82,0.95);
+        --sub:  rgba(140,108,82,0.65);
+        --thin: rgba(140,108,82,0.35);
+      }
+
+      .mountain {
+        fill: none;
+        stroke: var(--main);
+        stroke-width: 2.6;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .snow {
+        fill: none;
+        stroke: var(--thin);
+        stroke-width: 1;
+        stroke-dasharray: 4 7;
+      }
+      .bridge-main {
+        fill: none;
+        stroke: var(--main);
+        stroke-width: 2.1;
+      }
+      .bridge-sub {
+        fill: none;
+        stroke: var(--sub);
+        stroke-width: 1;
+      }
+      .river {
+        fill: none;
+        stroke: var(--thin);
+        stroke-width: 0.9;
+      }
+      .city {
+        fill: none;
+        stroke: var(--sub);
+        stroke-width: 1;
+      }
+      .type {
+        fill: var(--main);
+        font-family: "Cormorant Garamond", serif;
+        font-size: 42px;
+        font-weight: 300;
+        letter-spacing: 0.28em;
+      }
+      .tagline {
+        fill: var(--sub);
+        font-family: "Noto Serif JP", serif;
+        font-size: 14px;
+        letter-spacing: 0.3em;
+      }
+      .line {
+        stroke: var(--sub);
+        stroke-width: 0.8;
+      }
+    </style>
+  </defs>
+
+  <!-- 岩手山 -->
+  <path d="M60 96
+       C120 90, 180 78, 235 70
+       C285 62, 320 56, 350 54
+       C380 56, 415 62, 470 74
+       C525 86, 585 92, 640 98" class="mountain"></path>
+
+  <!-- 雪稜 -->
+  <path d="M190 88
+       C240 84, 300 82, 350 82
+       C400 84, 455 88, 510 94" class="snow"></path>
+
+  <!-- 盛岡の街 -->
+  <g class="city">
+    <line x1="230" y1="120" x2="230" y2="146"></line>
+    <line x1="265" y1="124" x2="265" y2="146"></line>
+    <line x1="305" y1="118" x2="305" y2="146"></line>
+    <line x1="345" y1="122" x2="345" y2="146"></line>
+    <line x1="385" y1="120" x2="385" y2="146"></line>
+    <line x1="420" y1="124" x2="420" y2="146"></line>
+  </g>
+
+  <!-- 開運橋 -->
+  <path d="M200 157
+       C290 151, 410 151, 500 157" class="bridge-main"></path>
+  <line x1="200" y1="157" x2="500" y2="157" class="bridge-main"></line>
+
+  <!-- 橋脚 -->
+  <g class="bridge-sub">
+    <line x1="245" y1="157" x2="245" y2="163"></line>
+    <line x1="350" y1="157" x2="350" y2="163"></line>
+    <line x1="455" y1="157" x2="455" y2="163"></line>
+  </g>
+
+  <!-- 中津川 -->
+  <path d="M190 170
+       C270 172, 350 174, 510 172" class="river"></path>
+
+  <!-- ロゴタイプ -->
+  <text x="350" y="215" text-anchor="middle" class="type">
+    MORIOKANS
+  </text>
+
+  <!-- サブコピー -->
+  <line x1="215" y1="245" x2="285" y2="245" class="line"></line>
+  <text x="350" y="250" text-anchor="middle" class="tagline">
+    暮らすように歩く
+  </text>
+  <line x1="415" y1="245" x2="485" y2="245" class="line"></line>
+
+</svg>
